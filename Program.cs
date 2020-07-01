@@ -14,8 +14,6 @@ namespace MvcMovie
 {
     public class Program
     {
-
-        
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();
@@ -24,9 +22,9 @@ namespace MvcMovie
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseKestrel(options=>
+                .UseKestrel(options =>
                 {
-                    options.Limits.MaxRequestBodySize=null;
+                    options.Limits.MaxRequestBodySize = null;
                 })
                 .Build();
     }
