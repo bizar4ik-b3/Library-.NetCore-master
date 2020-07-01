@@ -1,0 +1,31 @@
+@model MvcMovie.Models.LoginModel
+<div class="d-flex justify-content-center align-items-center container ">  
+   <div class="row ">
+    		<div class="panel panel-default">
+			  	<div class="panel-heading">
+			    	<h3 class="panel-title">Авторизація</h3>
+			 	</div>
+				 
+			  	<div class="panel-body">
+			    	 @using(Html.BeginForm("Login", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+			@Html.ValidationSummary(true)
+                    <fieldset>
+			    	  	<div class="form-group">
+			    		    <input class="form-control" placeholder="Логін" name="login" type="text">
+							 @Html.ValidationMessageFor(model => model.login)
+			    		</div>
+			    		<div class="form-group">
+			    			<input class="form-control" placeholder="Пароль" name="LoginPassword" type="password" value="">
+							@Html.ValidationMessageFor(model => model.LoginPassword)
+			    		</div>
+			    		
+			    		<input class="btn btn-lg btn-info btn-block" type="submit" value="Увійти">
+			    	</fieldset>
+			  }
+			    </div>
+			</div>
+		</div>
+	</div>
+
+

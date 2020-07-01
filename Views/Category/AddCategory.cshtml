@@ -1,0 +1,52 @@
+﻿@model MvcMovie.Models.AddCategoryModel
+@{
+  ViewData["Title"] = "Створити категорію";
+  Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using MvcMovie.TagHelpers
+
+
+<h3>Додавання нової категорії</h3>
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+
+        </button>
+      </div>
+      <div class="modal-body">
+
+
+        @using(Html.BeginForm("AddCategory", "Category", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+          @Html.ValidationSummary(true)
+       <div class="form-group">
+
+          @Html.LabelFor(model=>model.Name)
+          @Html.EditorFor(model=>model.Name,new { htmlAttributes = new { @class = "form-control" } })
+          @Html.ValidationMessageFor(model => model.Name)
+        <br>
+         
+        <div class="form-group">
+            <label for="sel1">Оберіть батьківську категорію</label>
+            @Html.DropDownListFor(model=>model.categories,ViewBag.Categories as SelectList, new{@class="form-control"})
+            <!-- Html.HierarchyList(ViewBag.Categories1 as List<Category>) -->
+ 
+        </div>
+
+        </div>
+            @Html.LabelFor(model => model.Desc1)
+           @Html.TextAreaFor(model=>model.Desc1,new { htmlAttributes = new { @class = "form-control" } })
+            <br>
+
+        <button type="submit" class="btn btn-primary">Зберегти</button>
+        }
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+ 
+

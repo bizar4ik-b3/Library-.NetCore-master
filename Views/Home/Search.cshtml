@@ -1,0 +1,70 @@
+﻿@using MvcMovie.Models
+@model SearchViewModel
+@addTagHelper "*, MvcMovie"
+	
+
+@{
+    ViewData["Title"] = "Результати пошуку:"+ViewData["Input"];
+}
+
+    <hgroup class="mb20">
+		<h2 class="lead"><strong class="text-danger">@ViewBag.Count</strong> записів знайдено по запиту: <strong class="text-danger">"@ViewBag.Query"</strong></h2>								
+	</hgroup>
+
+    <section class="col-xs-12 col-sm-6 col-md-12 ">
+        @foreach(var item in Model.SearchDocs)
+{
+	
+        <!-- ============================ -->
+		<article class="search-result row">
+			<!-- <div class="col-xs-12 col-sm-12 col-md-3">
+                
+				<a href="@item.Path" title="Lorem ipsum" class="thumbnail"><img src="" alt="Lorem ipsum" /></a>
+                
+			</div> -->
+			<!-- <div class="col-xs-12 col-sm-12 col-md-2">
+				<ul class="meta-search">
+					<li><i class="glyphicon glyphicon-calendar"></i> <span>02/15/2014</span></li>
+					<li><i class="glyphicon glyphicon-time"></i> <span>4:28 pm</span></li>
+					<li><i class="glyphicon glyphicon-tags"></i> <span>People</span></li>
+				</ul>
+			</div> -->
+			<div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                @{
+				<h5 style="margin-bottom:0px"><a target="_blank" href="/File/Show/@item.id" title="">@item.Name</a></h5>
+							
+				if(User.IsInRole("Admin")||User.IsInRole("Director"))
+				{
+					@Html.ActionLink("Детальна інформація", "Details","File" ,
+                new { id = item.id }, new { @class = "compItem" })
+				<br>
+				}
+			
+				 
+				}
+				Категорія: <a class="text-success" href="/Category/Show/@item.CategoryId" title="">@item.CategoryName</a>
+				<p>@{
+					if(item.Desc2.Length>750)
+					{
+						@item.Desc2.Substring(500,250)
+					}
+					else if((item.Desc2.Length<250)&&(item.Desc2.Length>0))
+					{
+						@item.Desc2.Substring(0,@item.Desc2.Length)
+					}
+										
+					}
+				</p>		
+			</div>
+			<span class="clearfix borda"></span>
+		</article>
+<!-- ============================ -->	
+		
+		 <div id="modDialog" class="modal fade" >
+    		<div id="dialogContent" class="modal-dialog">
+				//Modal Details
+			</div>
+		</div>
+}
+	</section>
+	<p ><page-link style=" width: 200px; padding: 10px; margin: auto;" search-query=@ViewBag.SearchQuery  page-model="Model.PageViewModel" page-action="Search"></page-link></p>

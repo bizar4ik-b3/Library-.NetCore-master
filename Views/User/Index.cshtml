@@ -1,0 +1,68 @@
+@model IEnumerable<MvcMovie.Models.User>
+@{
+    ViewData["Title"] = "Користувачі";
+}
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}  
+          <!-- DataTables Example -->
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-table"></i>
+             Користувачі</div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                       <th>Прізвище</th>
+                      <th>Імя</th>
+                      <th>По-батькові</th>
+                      <th>Логін</th>
+                      <th>Роль</th>
+                      <th>Редагувати</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                       <th>Прізвище</th>
+                      <th>Імя</th>
+                      <th>По-батькові</th>
+                      <th>Логін</th>
+                      <th>Роль</th>
+                      <th>Редагувати</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+            @foreach(var user in Model)
+                {
+                    <tr>
+                      <td>@user.surName</td>
+                      <td>@user.name</td>
+                      <td>@user.middleName</td>
+                      <td>@user.login</td>
+                      <td>@user.Roles.name</td>
+                      <td>
+                        <a  class="openDialog" href="User/Edit/@user.id">
+                              <img  style="width: 30px;height: 30px" src="/images/Edit-icon.png" title="Редагувати" />
+                        </a>
+
+                        <a class="openDialog" href="User/Delete/@user.id">
+                              <img src="/images/Delete-icon.png" style="width: 30px;height: 30px" title="Видалити" />
+                        </a>
+                        </td>
+                    </tr>
+                }
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-footer small text-muted">Кількість користувачів: @ViewBag.UsersCount</div>
+          </div>
+
+          <!-- <p class="small text-center text-muted my-5">
+            <em>123</em>
+          </p> -->
+
+        </div>

@@ -1,0 +1,142 @@
+﻿@model MvcMovie.Models.AddFileModelView
+@{
+  ViewData["Title"] = "Новий документ";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h3>Додавання нового документу</h3>
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="progress" style ="background-color:#ffffff;position:relative;width:100%;height: 20px;">
+            <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated" ></div>
+        </div>
+      </div>
+      <div class="modal-body">
+
+
+        @using(Html.BeginForm("AddFile", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+          @Html.ValidationSummary(true)
+       <div class="form-group">
+
+          @Html.LabelFor(model=>model.Name)
+          @Html.EditorFor(model=>model.Name,new { htmlAttributes = new { @class = "form-control" } })
+          @Html.ValidationMessageFor(model => model.Name)
+        <br>
+         <div class="input-group mb-3">
+          <div class="input-group-prepend">
+           
+          </div>
+
+          <div class="custom-file">
+            <input type="file" accept="application/pdf,.mp4,.docx" name="uploadedFile" class="custom-file-input" id="uploadedFile" aria-describedby="inputGroupFileAddon01">
+            <label class="custom-file-label form-control-file">Виберіть файл</label>
+          </div>
+          
+        </div>
+
+
+        <div class="form-group">
+            <label for="sel1">Оберіть категорію:</label>
+            @Html.DropDownList("categories",ViewBag.Categories as SelectList, new{@class="form-control"})
+        </div>      
+       
+        </div>
+              @Html.LabelFor(model => model.Desc1)
+           @Html.TextAreaFor(model=>model.Desc1,new { htmlAttributes = new { @class = "form-control" } }) 
+            <br>
+             
+           @Html.CheckBoxFor(model=>model.Published,new { htmlAttributes = new { @class = "form-check-input" } })
+           @Html.LabelFor(model => model.Published)
+           <br>
+           @Html.CheckBoxFor(model=>model.AccessLinkOnly,new { htmlAttributes = new { @class = "form-check-input" } })
+           @Html.LabelFor(model => model.AccessLinkOnly)
+            <br>
+
+        <button id="Save" type="submit" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >Зберегти</button>
+        }
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Зачекайте, файл обробляється. Вас автоматично буде перенаправлено!
+        Ви можете продовжити роботу або зачекати!
+      </div>
+      <div class="modal-footer">
+        <button id="wait" type="button" class="btn btn-secondary" data-dismiss="modal">Зачекати</button>
+        <button id="redirect" type="button" class="btn btn-primary" onclick="window.location='/File/MyFiles'">Мої файли</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <script> 
+        $("#Save").click(function () { 
+            var progressEle = $("#progress-bar"); 
+            //progressEle.css("background", "blue"); 
+ 
+            var data = document.getElementById("uploadedFile").files[0]; 
+ 
+            var formData = new FormData(); 
+ 
+            formData.append("files", data); 
+ 
+            $.ajax({ 
+                url: "/Admin/AddFile", 
+                data: formData, 
+                processData: false, 
+                contentType: false, 
+                type: "POST", 
+                xhr: function () { 
+                    var xhr = new window.XMLHttpRequest(); 
+                    xhr.upload.addEventListener("progress", function (evt) { 
+                        if (evt.lengthComputable) { 
+                            var progress = Math.round((evt.loaded / evt.total) * 100); 
+                            progressEle.width(progress + "%"); 
+                            progressEle.html(progress + "%");
+                           
+                           if(progress==100)
+                           {
+                             progressEle.css("background", "green"); 
+                             progressEle.html("Зачекайте, файл обробляється. Вас автоматично буде перенаправлено!");
+                           }
+                        } 
+                    }, false); 
+                    return xhr; 
+                }, 
+                success: function (data) { 
+                    if (data.state == 0) { 
+                        progressEle.css("background", "green"); 
+                    } 
+                } 
+            }); 
+        }); 
+
+
+            $('#uploadedFile').change(function (e) {
+                $(this).next('.custom-file-label').html(e.target.files[0].name);
+            });
+
+    </script> 
+
+   

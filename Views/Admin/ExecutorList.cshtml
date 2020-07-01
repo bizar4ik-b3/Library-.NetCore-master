@@ -1,0 +1,61 @@
+@model IEnumerable<MvcMovie.Models.LibDocument>
+@{
+    ViewData["Title"] = "Перевірка документів";
+}
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}  
+          <!-- DataTables Example -->
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-table"></i>
+             Документи на перевірку: @ViewBag.DocsToCheckedCount</div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                       <th>Користувач</th>
+                      <th>Документ</th>
+                      <th>Статус</th>
+                      
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                    <th>Користувач</th>
+                      <th>Документ</th>
+                      <th>Статус</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+            @foreach(var doc in Model)
+                {
+                  @using (Html.BeginForm())
+                    { 
+                      @Html.Hidden("docId",doc.id)
+                      <tr>
+                              <td>@doc.User.surName @doc.User.name</td>
+                              <td>
+                                <a target="_blank" href="/File/Show/@doc.id" title="">@doc.Name</a>
+                                <p>Категорія: @doc.Category.Name</p>
+                              </td>
+                              <td>@Html.CheckBox("DocChecked", @doc.DocChecked)
+                                <input type="submit" value="Дозволити" />
+                              </td>
+                      </tr>
+                    }
+                }
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- <div class="card-footer small text-muted">222</div>
+          </div>
+
+          <p class="small text-center text-muted my-5">
+            <em>123</em>
+          </p> -->
+
+        </div>

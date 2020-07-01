@@ -1,0 +1,63 @@
+﻿@model MvcMovie.Models.User
+@{
+  ViewData["Title"] = "Додавання кристувача";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h3>Додавання нового користувача</h3>
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+
+        </button>
+      </div>
+      <div class="modal-body">
+
+
+        @using(Html.BeginForm("addUser", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+          @Html.ValidationSummary(true)
+       <div class="form-group">
+          @Html.LabelFor(model => model.name)
+          @Html.EditorFor(model=>model.name,new { htmlAttributes = new { @class = "form-control" } })
+          @Html.ValidationMessageFor(model => model.name)
+          <!-- <input type="text" id="DocName"  placeholder="Введіть назву документу"> -->
+
+          @Html.LabelFor(model => model.surName)
+          @Html.EditorFor(model=>model.surName,new { htmlAttributes = new { @class = "form-control" } })
+          @Html.ValidationMessageFor(model => model.surName)
+
+          @Html.LabelFor(model => model.middleName)
+          @Html.EditorFor(model=>model.middleName,new { htmlAttributes = new { @class = "form-control" } })
+          @Html.ValidationMessageFor(model => model.middleName)
+
+          @Html.LabelFor(model => model.login)
+          @Html.EditorFor(model=>model.login,new { htmlAttributes = new { @class = "form-control" } })
+          @Html.ValidationMessageFor(model => model.login)
+
+          @Html.LabelFor(model => model.password)
+          @Html.EditorFor(model=>model.password,new { htmlAttributes = new { @class = "form-control" } })
+          @Html.ValidationMessageFor(model => model.password)
+
+        
+          @Html.LabelFor(model => model.Roles.name)
+          @Html.DropDownListFor(model=>model.Rolesid, ViewBag.Roles as IEnumerable<SelectListItem> ,new{@class="form-control"})
+          
+          @Html.LabelFor(model => model.Desc)      
+          @Html.TextAreaFor(model=>model.Desc,new { htmlAttributes = new { @class = "form-control" } })
+
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Зберегти</button>
+        }
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+ 
+

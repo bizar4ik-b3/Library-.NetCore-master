@@ -1,0 +1,52 @@
+
+@{
+    ViewData["Title"] = "Категорії";
+   
+}
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<!-- <p>@ViewBag.Menu</p> -->
+
+
+
+<!-- Not needed, only for making it clickable on StackOverflow -->
+
+<div class="context-menu" id="context-menu" style="display:none;position:absolute;z-index:9999">
+    <ul>
+      <li><a id="EditContext"  href=""><i class="fas fa-edit"></i> Редагувати</a></li>      
+
+      <li><a  id="DeleteContext1"  data-toggle="modal" data-target="#ConfirmDelete" href=""><i class="fa fa-trash"></i> Видалити</a></li>      
+   
+    </ul>
+</div>
+
+<div class="modal fade" id="ConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Підтверження дії</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">x</span>
+            </button>
+          </div>
+          <div class="modal-body">Видалення пункту меню(Категорію документу) може привести до видалення всіх підкатегорій та документів що в ній знаходяться!
+            Натісніть "Видалити" якщо бажаєте видалити пункт меню(Категорію документу)!
+          </span></div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Відмінити</button>
+            <a  id="DeleteContext" class="btn btn-primary" href="">Видалити</a>
+          </div>
+        </div>
+      </div>
+</div>
+
+<!-- <p class="getclass" id="get_class_id" >Hover the mouse</p> -->
+
+         @if(User.Identity.IsAuthenticated)
+        {
+          @await Component.InvokeAsync("MenuNew");
+        }

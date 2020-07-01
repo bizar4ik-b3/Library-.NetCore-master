@@ -1,0 +1,99 @@
+
+@{
+    ViewData["Title"] = "Мої файли";
+}
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}  
+          <!-- DataTables Example -->
+          <div class="card mb-3">
+            <div class="card-header">
+              <i class="fas fa-table"></i>
+             Мої файли</div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                       <th style="text-align: center">Назва</th>
+                       <th style="text-align: center">Категорія</th>
+                       <th style="text-align: center">Статус</th>
+                      <th style="text-align: center">Опис</th>
+                      
+                      <th style="text-align: center">Редагувати</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                       <th style="text-align: center">Назва</th>
+                       <th style="text-align: center">Категорія</th>
+                       <th style="text-align: center">Статус</th>
+                        <th style="text-align: center">Опис</th>                     
+                      <th style="text-align: center">Редагувати</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+            @foreach(var file in Model)
+                {
+                    <tr >
+                      <td><a target="_blank" href="/File/Show/@file.id" title="">@file.Name</a></td>
+
+                      <td>@file.Category.Name</td>
+
+                      <td>
+                        <p>
+                        @if(file.Published)
+                        {
+                        <i data-toggle="tooltip" data-placement="top" title="Опубліковано" class="fas fa fa-thumbs-up" style='font-size:18px;color:green'></i>
+                        }
+                        else
+                        {
+                         <i data-toggle="tooltip" data-placement="top" title="Не опубліковано" class="fas fa fa-thumbs-up" style='font-size:18px;color:red'></i>
+                        }
+                       
+                        @if(file.DocChecked)
+                        {
+                        <i data-toggle="tooltip" data-placement="top" title="Перевірено" class="fas fa fa-thumbs-up" style='font-size:18px;color:green'></i>
+                        }
+                        else
+                        {
+                         <i data-toggle="tooltip" data-placement="top" title="Не перевірено" class="fas fa fa-thumbs-up" style='font-size:18px;color:red'></i>
+                        }
+                        </p>                       
+
+                      
+                      </td>
+
+                      <td>@file.Desc1</td>
+                      
+                      <td style="text-align: center">
+                        <!-- The button used to copy the text -->
+                        
+                        <a style="visibility: hidden; display: none" href="/File/Show/@file.id" id="@file.id">@Context.Request.Host/File/Show/@file.id</a>
+                        <!-- <input type="text" id="@file.id" value="@file.Path"> -->
+                       
+
+                        <a  class="openDialog" href="/File/Edit/@file.id">
+                              <img  style="width: 20px;height: 20px" src="/images/Edit-icon.png" title="Редагувати" />
+                        </a>
+
+                        <a class="openDialog" href="/File/Delete/@file.id">
+                              <img src="/images/Delete-icon.png" style="width: 20px;height: 20px" title="Видалити" />
+                        </a>
+                         <button onclick="copyToClipboard('#@file.id')"><img title="Скопіювати посилання" style="width: 15px;height: 15px" src="/images/Link-Building.png"></button>
+                        </td>
+                    </tr>
+                }
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-footer small text-muted">222</div>
+          </div>
+
+          <p class="small text-center text-muted my-5">
+            <em>123</em>
+          </p>
+
+        </div>

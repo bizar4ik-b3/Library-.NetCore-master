@@ -1,0 +1,26 @@
+@model MvcMovie.Models.LibDocument
+
+<div class="modal-content">
+    <div class="modal-header">
+        <h4>Детальна інформація</h4>
+        <button type="button"  class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        
+    </div>
+    <div class="modal-body">
+        <dl class="dl-horizontal">
+            <dt>Назва документу:</dt>
+            <dd>@Html.DisplayFor(model => model.Name)</dd>
+ 
+            <dt>Дозволив</dt>
+            <dd>@Html.DisplayFor(model => model.Executor.name)</dd>
+ 
+            <dt>Завантажив</dt>
+            <dd>@Html.DisplayFor(model => model.User.surName)
+                @Html.DisplayFor(model => model.User.name)
+                @Html.DisplayFor(model => model.User.middleName)
+            </dd>
+        </dl>
+    </div>
+</div>

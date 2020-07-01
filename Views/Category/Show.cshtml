@@ -1,0 +1,51 @@
+@using MvcMovie.Models
+@model CategoriesViewModel
+@addTagHelper "*, MvcMovie"
+
+@{
+    ViewData["Title"] = "Результати пошуку:"+ViewData["Input"];
+    
+}
+
+    <hgroup class="mb20">
+									
+	</hgroup>
+
+    <section class="col-xs-12 col-sm-6 col-md-12 ">
+        @foreach(var item in Model.Documents)
+{
+        <!-- ============================ -->
+		<article class="search-result row">
+			
+			<div class="col-xs-12 col-sm-12 col-md-7 excerpet">
+                 
+                @{
+				<strong class="text-danger"></strong><h5><a target="_blank" href="/File/Show/@item.id" title="">@item.Name</a></h5>
+                }
+				Категорія: <a class="text-success" href="/Category/Show/@item.CategoryId" title="">@item.Category.Name</a>
+				<p>@{
+					if(item.Desc2.Length>750)
+					{
+						@item.Desc2.Substring(500,250)
+					}
+					else if((item.Desc2.Length<250)&&(item.Desc2.Length>0))
+					{
+						@item.Desc2.Substring(0,@item.Desc2.Length)
+					}
+					
+								
+					}
+				</p>	
+			</div>
+			<span class="clearfix borda"></span>
+		</article>
+<!-- ============================ -->	
+}
+	</section>
+	
+	<p ><page-link style=" width: 200px; padding: 10px; margin: auto;" page-model="Model.PageViewModel" page-action="Show"></page-link></p>
+	
+	
+
+	
+
